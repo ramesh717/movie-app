@@ -1,0 +1,35 @@
+import React from "react";
+import PropTypes from "prop-types";
+import _ from "lodash";
+export default function Pagination(props) {
+  const { itemsCount, pageSize, onPageChange, currentPage } = props;
+  const pagesCount = Math.ceil(itemsCount / pageSize);
+  if (pagesCount === 1) {
+    return null;
+  }
+  const pages = _.range(1, pagesCount + 1);
+  console.log(currentPage);
+  return (
+    <nav className="pagination">
+      {pages.map((page) => {
+        return (
+          <li
+            key={page}
+            className={page === currentPage ? "page-item active" : "page-item"}
+          >
+            <a className="page-link" onClick={() => onPageChange(page)}>
+              {page}
+            </a>
+          </li>
+        );
+      })}
+    </nav>
+  );
+}
+
+Pagination.propTypes = {
+  itemsCount: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+};
